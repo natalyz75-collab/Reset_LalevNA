@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Frank+Ruhl+Libre:wght@400;500;700;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Assistant", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Frank Ruhl Libre", serif;
+  
+  --color-brand-warm: #FDFBF7;
+  --color-brand-ink: #2D2926;
+  --color-brand-accent: #C48B71; /* Soft Terracotta */
+  --color-brand-gold: #D4AF37;
+  --color-brand-olive: #5A5A40;
+}
+
+/* Custom Scrollbar for Modal */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-brand-accent);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-accent);
+}
