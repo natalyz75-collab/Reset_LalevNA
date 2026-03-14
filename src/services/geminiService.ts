@@ -1,51 +1,27 @@
 import { GoogleGenAI } from "@google/genai";
-import { MatrixData } from "../utils/matrixUtils";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
 
-export async function getMatrixInterpretation(data: MatrixData) {
-  const prompt = `
-    אתה מומחה לנומרולוגיה ושיטת "מטריצת הגורל" (Matrix of Destiny).
-    נתח את המטריצה הבאה עבור תאריך לידה: ${data.day}/${data.month}/${data.year}.
-    
-    הערכים המחושבים (לפי 22 הארקנות):
-    - נקודה A (משמאל - תכונות בסיס): ${data.a}
-    - נקודה B (למעלה - קשר עם הרוח): ${data.b}
-    - נקודה C (מימין - פוטנציאל כלכלי/מימוש): ${data.c}
-    - נקודה D (למטה - שיעור קרמתי): ${data.d}
-    - נקודה E (מרכז - המהות הפנימית): ${data.e}
-    
-    אנא ספק ניתוח קצר, מעצים ומעניין בעברית עבור כל אחת מהנקודות הללו.
-    השתמש בשפה מודרנית, רוחנית ומזמינה. 
-    הניתוח מיועד לדף נחיטה אינטראקטיבי.
-    
-    החזר את התשובה במבנה JSON הבא:
-    {
-      "summary": "סיכום כללי קצר",
-      "points": {
-        "a": "תיאור נקודה A",
-        "b": "תיאור נקודה B",
-        "c": "תיאור נקודה C",
-        "d": "תיאור נקודה D",
-        "e": "תיאור נקודה E"
-      }
-    }
-  `;
+export async function analyzeText(text: string, name: string) {
+  if (!text) return null;
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview", // Using a supported fast model
-      contents: [{ parts: [{ text: prompt }] }],
-      config: {
-        responseMimeType: "application/json",
-      }
+      model: "gemini-3-flash-preview",
+      contents: `
+        You are a professional numerologist and destiny matrix expert.
+        Analyze the following text provided by the user named ${name}.
+        The text might be a personal story, a dream, or a description of their life.
+        Provide a short, insightful analysis (3-4 sentences) in Hebrew that connects their story to their "Unique Code" (קוד ייחודי).
+        
+        User Text:
+        ${text}
+      `,
     });
 
-    const text = response.text;
-    if (!text) throw new Error("No response from AI");
-    return JSON.parse(text);
+    return response.text;
   } catch (error) {
-    console.error("Error getting interpretation:", error);
-    return null;
+    console.error("Gemini Analysis Error:", error);
+    return "מצטערים, חלה שגיאה בניתוח הטקסט. אנא נסי שוב מאוחר יותר.";
   }
 }

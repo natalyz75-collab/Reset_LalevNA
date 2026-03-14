@@ -8,12 +8,14 @@ import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react';
 import { 
   Calendar, Share2, Sparkles, ChevronRight, Info, Copy, Check, X,
   User, Briefcase, Target, Heart, ShieldAlert, Activity, TrendingUp,
-  Zap, Sun, Moon, Anchor, Compass, Award, Gem, Lock
+  Zap, Sun, Moon, Anchor, Compass, Award, Gem, Lock,
+  Mail, Globe, Phone, Facebook, Instagram, ArrowUp
 } from 'lucide-react';
 import { calculateMatrix, MatrixData } from './utils/matrixUtils';
 import { NATALIE_REPORT } from './constants/natalieReport';
 import { ARIEL_REPORT } from './constants/arielReport';
 import { TAROT_DATA, TarotCard } from './constants/tarotData';
+import LZString from 'lz-string';
 
 const WhatsAppIcon = ({ size = 24 }: { size?: number }) => (
   <svg 
@@ -41,6 +43,153 @@ const WhatsAppCTA = () => (
   </div>
 );
 
+const Header = () => {
+  return (
+    <header className="flex flex-col items-center pt-12 pb-8 space-y-6">
+      <a 
+        href="https://resetlalev.netlify.app/" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="flex items-center gap-5 bg-white/50 backdrop-blur-sm px-6 py-3 rounded-[2.5rem] border border-brand-accent/10 shadow-sm hover:bg-brand-accent/5 transition-all group"
+      >
+        <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-brand-accent/20 shadow-lg group-hover:scale-105 transition-transform">
+          <img 
+            src="https://lh3.googleusercontent.com/d/12bfPSkBTT8OP3Kpx6wD3aCplG_pC7luo" 
+            alt="נטלי צ'ודנובסקי" 
+            className="w-full h-full object-cover"
+            referrerPolicy="no-referrer"
+          />
+        </div>
+        <div className="text-right">
+          <h2 className="text-xl font-serif font-bold text-brand-ink leading-none">נטלי צ'ודנובסקי</h2>
+          <p className="text-brand-accent font-bold text-[10px] tracking-widest uppercase mt-1">RESET LALEV</p>
+        </div>
+      </a>
+      
+      <div className="flex flex-col items-center space-y-2">
+        <div className="flex gap-8 text-brand-ink/10 py-4">
+          <a 
+            href="https://www.facebook.com/Levlifecoach/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="hover:text-brand-accent transition-colors"
+          >
+            <Facebook size={40} />
+          </a>
+          <a 
+            href="https://www.instagram.com/reset_lalev/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="hover:text-brand-accent transition-colors"
+          >
+            <Instagram size={40} />
+          </a>
+        </div>
+        <div className="h-px w-32 bg-brand-accent/20" />
+        
+        <div className="flex flex-col items-center gap-1 mt-2">
+          <motion.div
+            animate={{ y: [0, -5, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="text-brand-accent"
+          >
+            <ArrowUp size={20} />
+          </motion.div>
+          <a 
+            href="https://resetlalev.netlify.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-brand-accent font-bold text-xs hover:underline transition-all"
+          >
+            למידע נוסף לחץ
+          </a>
+        </div>
+      </div>
+    </header>
+  );
+};
+
+const ContactFooter = () => {
+  return (
+    <footer className="mt-32 pb-20 text-center space-y-12 border-t border-brand-accent/10 pt-20">
+      <div className="space-y-4">
+        <h2 className="text-3xl font-serif font-bold text-brand-ink tracking-widest">יצירת קשר ומידע</h2>
+        <div className="w-64 h-px bg-brand-accent/20 mx-auto" />
+      </div>
+
+      <div className="flex flex-wrap justify-center gap-6 md:gap-10 py-10">
+        {/* Share */}
+        <div className="relative group cursor-pointer">
+          <div className="w-16 h-16 bg-[#90EE90] rotate-45 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+            <div className="-rotate-45 text-white">
+              <Share2 size={24} />
+            </div>
+          </div>
+        </div>
+        
+        {/* Email */}
+        <a href="mailto:natalyz75@gmail.com" className="relative group cursor-pointer">
+          <div className="w-16 h-16 bg-[#C8A2C8] rotate-45 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+            <div className="-rotate-45 text-white">
+              <Mail size={24} />
+            </div>
+          </div>
+        </a>
+
+        {/* Web */}
+        <a href="https://resetlalev.netlify.app/" target="_blank" rel="noopener noreferrer" className="relative group cursor-pointer">
+          <div className="w-20 h-20 bg-[#FF6B6B] rotate-45 rounded-2xl flex items-center justify-center shadow-xl border-4 border-brand-ink group-hover:scale-110 transition-transform -mt-2">
+            <div className="-rotate-45 text-white">
+              <Globe size={32} />
+            </div>
+          </div>
+        </a>
+
+        {/* Phone */}
+        <a href="tel:+972505213995" className="relative group cursor-pointer">
+          <div className="w-16 h-16 bg-[#C8A2C8] rotate-45 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+            <div className="-rotate-45 text-white">
+              <Phone size={24} />
+            </div>
+          </div>
+        </a>
+
+        {/* WhatsApp */}
+        <a href="https://wa.me/972505213995" target="_blank" rel="noopener noreferrer" className="relative group cursor-pointer">
+          <div className="w-16 h-16 bg-[#90EE90] rotate-45 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+            <div className="-rotate-45 text-white">
+              <WhatsAppIcon size={24} />
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div className="pt-10 border-t border-brand-accent/5 max-w-xs mx-auto">
+        <p className="text-[10px] text-brand-ink/20 uppercase tracking-widest font-bold flex items-center justify-center gap-3">
+          <span>© 2026</span>
+          <a 
+            href="https://www.facebook.com/Levlifecoach/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="hover:text-brand-accent transition-colors"
+          >
+            <Facebook size={18} />
+          </a>
+          <a 
+            href="https://www.instagram.com/reset_lalev/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="hover:text-brand-accent transition-colors"
+          >
+            <Instagram size={18} />
+          </a>
+          <span>BY NATALY CHUDNOVSKY</span>
+        </p>
+      </div>
+    </footer>
+  );
+};
+
 export default function App() {
   const [name, setName] = useState(NATALIE_REPORT.name);
   const [dob, setDob] = useState(() => {
@@ -53,15 +202,39 @@ export default function App() {
   const [showFullReport, setShowFullReport] = useState(false);
   const [selectedCard, setSelectedCard] = useState<TarotCard | null>(null);
   const [selectedChakra, setSelectedChakra] = useState<any | null>(null);
+  const [selectedForecast, setSelectedForecast] = useState<any | null>(null);
+  const [pastedReport, setPastedReport] = useState<any | null>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('pastedReport');
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch (e) {
+          return null;
+        }
+      }
+    }
+    return null;
+  });
+  const [pasteValue, setPasteValue] = useState('');
+  const [showPasteModal, setShowPasteModal] = useState(false);
+  const [isShared, setIsShared] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      return params.has('data') || params.has('dob');
+    }
+    return false;
+  });
 
   // Determine which report to use
   const currentReport = useMemo(() => {
+    if (pastedReport) return pastedReport;
     const normalizedName = name.trim().toLowerCase();
     if (normalizedName === 'אריאל' || normalizedName === 'ariel') {
       return ARIEL_REPORT;
     }
     return NATALIE_REPORT;
-  }, [name]);
+  }, [name, pastedReport]);
 
   // Auto-update DOB for known reports if not manually changed
   useEffect(() => {
@@ -88,6 +261,7 @@ export default function App() {
   });
 
   const navItems = [
+    { id: 'top', icon: <ArrowUp size={18} />, label: 'למעלה' },
     { id: 'matrix', icon: <Target size={18} />, label: 'מטריצה' },
     { id: 'career', icon: <Briefcase size={18} />, label: 'קריירה' },
     { id: 'destiny', icon: <TrendingUp size={18} />, label: 'ייעוד' },
@@ -134,7 +308,31 @@ export default function App() {
     const params = new URLSearchParams(window.location.search);
     const dobParam = params.get('dob');
     const nameParam = params.get('name');
-    if (dobParam) {
+    const dataParam = params.get('data');
+
+    if (dataParam) {
+      try {
+        const decompressed = LZString.decompressFromEncodedURIComponent(dataParam);
+        if (decompressed) {
+          const parsed = JSON.parse(decompressed);
+          setPastedReport(parsed);
+          if (parsed.dob) {
+            const dateValue = parsed.dob;
+            if (dateValue.includes('-')) {
+              const [y, m, d] = dateValue.split('-');
+              setDob(`${d}/${m}/${y}`);
+              handleAnalyze(`${d}/${m}/${y}`);
+            } else {
+              setDob(dateValue);
+              handleAnalyze(dateValue);
+            }
+          }
+          if (parsed.name) setName(parsed.name);
+        }
+      } catch (e) {
+        console.error('Failed to parse shared data', e);
+      }
+    } else if (dobParam) {
       // If URL has YYYY-MM-DD, convert to DD/MM/YYYY
       if (dobParam.includes('-')) {
         const [y, m, d] = dobParam.split('-');
@@ -183,16 +381,47 @@ export default function App() {
   };
 
   const handleShare = () => {
-    const url = new URL(window.location.href);
-    url.searchParams.set('dob', dob);
-    url.searchParams.set('name', name);
+    const url = new URL(window.location.origin + window.location.pathname);
+    
+    if (pastedReport) {
+      const compressed = LZString.compressToEncodedURIComponent(JSON.stringify(pastedReport));
+      url.searchParams.set('data', compressed);
+    } else {
+      url.searchParams.set('dob', dob);
+      url.searchParams.set('name', name);
+    }
+    
     navigator.clipboard.writeText(url.toString());
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handleApplyPaste = () => {
+    try {
+      const parsed = JSON.parse(pasteValue);
+      setPastedReport(parsed);
+      localStorage.setItem('pastedReport', JSON.stringify(parsed));
+      if (parsed.name) setName(parsed.name);
+      if (parsed.dob) {
+        const dateValue = parsed.dob;
+        if (dateValue.includes('-')) {
+          const [y, m, d] = dateValue.split('-');
+          setDob(`${d}/${m}/${y}`);
+          handleAnalyze(`${d}/${m}/${y}`);
+        } else {
+          setDob(dateValue);
+          handleAnalyze(dateValue);
+        }
+      }
+      setPasteValue('');
+      setShowPasteModal(false);
+    } catch (e) {
+      alert('התוכן שהודבק אינו תקין. אנא וודאי שמדובר בפורמט JSON תקין.');
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-brand-warm text-brand-ink font-sans selection:bg-brand-accent/20 overflow-x-hidden" dir="rtl">
+    <div id="top" className="min-h-screen bg-brand-warm text-brand-ink font-sans selection:bg-brand-accent/20 overflow-x-hidden" dir="rtl">
       {/* Progress Bar */}
       <motion.div className="fixed top-0 left-0 right-0 h-1 bg-brand-accent z-50 origin-[0%]" style={{ scaleX }} />
 
@@ -228,6 +457,8 @@ export default function App() {
       </div>
 
       <main className="relative z-10 max-w-5xl mx-auto px-6 py-12 md:py-24">
+        <Header />
+        
         {/* Hero Section */}
         <motion.header 
           initial={{ opacity: 0, y: 30 }}
@@ -249,62 +480,160 @@ export default function App() {
           <p className="text-xl text-brand-ink/60 max-w-2xl mx-auto leading-relaxed font-light">
             שלום {name}, גלי את הקוד הייחודי המדויק שלך.
           </p>
+          {pastedReport && (
+            <div className="mt-4 inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-600 text-xs font-bold rounded-full border border-emerald-100">
+              <Check size={12} />
+              <span>דוח מותאם אישית טעון</span>
+            </div>
+          )}
         </motion.header>
 
-        {/* Input Card */}
-        <motion.section 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="relative group mb-24"
-        >
-          <div className="relative bg-white border border-brand-accent/10 rounded-[2.5rem] p-8 md:p-12 shadow-xl shadow-brand-ink/5">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-end">
-              <div className="space-y-3">
-                <label className="text-sm font-bold text-brand-ink/40 mr-2">השם שלך</label>
-                <div className="relative">
-                  <User className="absolute right-4 top-1/2 -translate-y-1/2 text-brand-accent/40" size={20} />
-                  <input 
-                    type="text" 
-                    placeholder="הכניסי שם..."
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-brand-warm/50 border border-brand-accent/10 rounded-2xl py-4 pr-12 pl-4 text-brand-ink focus:outline-none focus:ring-2 focus:ring-brand-accent/50 transition-all"
-                  />
-                </div>
-              </div>
-              <div className="space-y-3">
-                <label className="text-sm font-bold text-brand-ink/40 mr-2">תאריך לידה</label>
-                <div className="relative">
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 text-brand-accent/40 font-bold text-sm min-w-[20px] flex justify-center">
-                    {age ? age : <Calendar size={20} />}
+        {/* Input Card - Hidden in shared mode */}
+        {!isShared && (
+          <>
+            <motion.section 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="relative group mb-12"
+            >
+              <div className="relative bg-white border border-brand-accent/10 rounded-[2.5rem] p-8 md:p-12 shadow-xl shadow-brand-ink/5">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-end">
+                  <div className="space-y-3">
+                    <label className="text-sm font-bold text-brand-ink/40 mr-2">השם שלך</label>
+                    <div className="relative">
+                      <User className="absolute right-4 top-1/2 -translate-y-1/2 text-brand-accent/40" size={20} />
+                      <input 
+                        type="text" 
+                        placeholder="הכניסי שם..."
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="w-full bg-brand-warm/50 border border-brand-accent/10 rounded-2xl py-4 pr-12 pl-4 text-brand-ink focus:outline-none focus:ring-2 focus:ring-brand-accent/50 transition-all"
+                      />
+                    </div>
                   </div>
-                  <input 
-                    type="text" 
-                    placeholder="DD/MM/YYYY"
-                    value={dob}
-                    onChange={handleDobChange}
-                    className="w-full bg-brand-warm/50 border border-brand-accent/10 rounded-2xl py-4 pr-12 pl-4 text-brand-ink focus:outline-none focus:ring-2 focus:ring-brand-accent/50 transition-all"
-                  />
+                  <div className="space-y-3">
+                    <label className="text-sm font-bold text-brand-ink/40 mr-2">תאריך לידה</label>
+                    <div className="relative">
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 text-brand-accent/40 font-bold text-sm min-w-[20px] flex justify-center">
+                        {age ? age : <Calendar size={20} />}
+                      </div>
+                      <input 
+                        type="text" 
+                        placeholder="DD/MM/YYYY"
+                        value={dob}
+                        onChange={handleDobChange}
+                        className="w-full bg-brand-warm/50 border border-brand-accent/10 rounded-2xl py-4 pr-12 pl-4 text-brand-ink focus:outline-none focus:ring-2 focus:ring-brand-accent/50 transition-all"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <button 
+                      onClick={() => handleAnalyze(dob)}
+                      disabled={loading || !dob}
+                      className="flex-grow h-[60px] bg-brand-accent text-white hover:bg-brand-accent/90 font-bold rounded-2xl transition-all flex items-center justify-center gap-3 group shadow-lg shadow-brand-accent/20"
+                    >
+                      {loading ? (
+                        <div className="w-6 h-6 border-3 border-white/20 border-t-white rounded-full animate-spin" />
+                      ) : (
+                        <>
+                          <span>הפיקי ניתוח מלא</span>
+                          <ChevronRight size={20} className="group-hover:translate-x-[-4px] transition-transform" />
+                        </>
+                      )}
+                    </button>
+                    <button
+                      onClick={() => setShowPasteModal(true)}
+                      className="w-[60px] h-[60px] bg-brand-ink text-white rounded-2xl flex items-center justify-center hover:bg-brand-ink/90 transition-all shadow-lg shadow-brand-ink/10 relative group"
+                      title="הדבקת תוכן JSON"
+                    >
+                      <Copy size={24} />
+                      {pastedReport && (
+                        <div className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white" />
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
-              <button 
-                onClick={() => handleAnalyze(dob)}
-                disabled={loading || !dob}
-                className="h-[60px] bg-brand-accent text-white hover:bg-brand-accent/90 font-bold rounded-2xl transition-all flex items-center justify-center gap-3 group shadow-lg shadow-brand-accent/20"
-              >
-                {loading ? (
-                  <div className="w-6 h-6 border-3 border-white/20 border-t-white rounded-full animate-spin" />
-                ) : (
-                  <>
-                    <span>הפיקי ניתוח מלא</span>
-                    <ChevronRight size={20} className="group-hover:translate-x-[-4px] transition-transform" />
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-        </motion.section>
+            </motion.section>
+
+            {/* Paste Data Modal */}
+            <AnimatePresence>
+              {showPasteModal && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="fixed inset-0 z-[110] flex items-center justify-center p-4 md:p-6 bg-brand-ink/40 backdrop-blur-sm"
+                  onClick={() => setShowPasteModal(false)}
+                >
+                  <motion.div
+                    initial={{ scale: 0.9, y: 20 }}
+                    animate={{ scale: 1, y: 0 }}
+                    exit={{ scale: 0.9, y: 20 }}
+                    className="relative max-w-2xl w-full bg-brand-warm border border-brand-accent/10 rounded-[2.5rem] p-8 md:p-10 shadow-2xl space-y-6"
+                    onClick={e => e.stopPropagation()}
+                  >
+                    <button 
+                      onClick={() => setShowPasteModal(false)}
+                      className="absolute top-4 right-4 z-30 w-10 h-10 rounded-full bg-white/90 border border-brand-accent/10 flex items-center justify-center text-brand-ink hover:bg-brand-accent hover:text-white transition-all shadow-sm"
+                    >
+                      <X size={20} />
+                    </button>
+
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-3 text-brand-accent">
+                        <Copy size={24} />
+                        <h3 className="text-2xl font-serif font-bold text-brand-ink">הדבקת תוכן דוח</h3>
+                      </div>
+                      <p className="text-brand-ink/60 text-sm">
+                        הדביקי כאן את תוכן ה-JSON שקיבלת כדי להציג אותו בעיצוב המלא של המערכת.
+                      </p>
+                      
+                      <textarea
+                        value={pasteValue}
+                        onChange={(e) => setPasteValue(e.target.value)}
+                        placeholder='הדביקי כאן את תוכן ה-JSON של הדוח...'
+                        className="w-full h-64 bg-white/50 border border-brand-accent/10 rounded-2xl p-6 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-brand-accent/50 transition-all custom-scrollbar"
+                      />
+                      
+                      <div className="flex gap-4">
+                        <button
+                          onClick={() => {
+                            if (pastedReport) {
+                              navigator.clipboard.writeText(JSON.stringify(pastedReport, null, 2));
+                              alert('ה-JSON הנוכחי הועתק ללוח');
+                            }
+                          }}
+                          className="flex-1 py-4 bg-white border border-brand-accent/10 text-brand-accent font-bold rounded-2xl hover:bg-brand-accent/5 transition-all"
+                        >
+                          העתקת JSON
+                        </button>
+                        <button
+                          onClick={() => {
+                            setPastedReport(null);
+                            localStorage.removeItem('pastedReport');
+                            setPasteValue('');
+                            setShowPasteModal(false);
+                          }}
+                          className="flex-1 py-4 bg-white border border-brand-accent/10 text-brand-ink/60 font-bold rounded-2xl hover:bg-brand-accent/5 transition-all"
+                        >
+                          איפוס דוח
+                        </button>
+                        <button
+                          onClick={handleApplyPaste}
+                          className="flex-[2] py-4 bg-brand-accent text-white font-bold rounded-2xl hover:bg-brand-accent/90 transition-all shadow-lg shadow-brand-accent/20"
+                        >
+                          החל נתונים
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </>
+        )}
 
         {/* Results Content */}
         <AnimatePresence>
@@ -316,8 +645,8 @@ export default function App() {
             >
               {/* Intro Summary */}
               <section id="intro" className="bg-brand-accent/5 border border-brand-accent/10 rounded-3xl p-8 md:p-12">
-                <p className="text-lg md:text-xl text-brand-ink/80 leading-relaxed italic font-serif">
-                  "{currentReport.intro}"
+                <p className="text-lg md:text-xl text-brand-ink/80 leading-relaxed italic font-serif whitespace-pre-line">
+                  "{currentReport?.intro || 'ברוכה הבאה לניתוח המטריצה שלך.'}"
                 </p>
               </section>
 
@@ -338,14 +667,14 @@ export default function App() {
                 <div className="space-y-8">
                   <div className="inline-flex items-center gap-2 text-brand-accent font-bold tracking-widest text-sm uppercase">
                     <div className="w-8 h-[1px] bg-brand-accent" />
-                    {currentReport.personality.title}
+                    {currentReport?.personality?.title || 'ניתוח אישיות'}
                   </div>
                   <h2 className="text-4xl font-serif font-bold text-brand-ink leading-tight">
                     הקוד הייחודי <br />
                     <span className="text-brand-accent/60">שלך נחשף</span>
                   </h2>
-                  <p className="text-lg text-brand-ink/70 leading-relaxed">
-                    {currentReport.personality.content}
+                  <p className="text-lg text-brand-ink/70 leading-relaxed whitespace-pre-line">
+                    {currentReport?.personality?.content || 'הקוד האישי שלך מורכב מאנרגיות ייחודיות המלוות אותך לאורך חייך.'}
                   </p>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="p-4 bg-white rounded-2xl border border-brand-accent/10 shadow-sm">
@@ -364,30 +693,30 @@ export default function App() {
               <section id="career" className="space-y-12 scroll-mt-24">
                 <SectionHeader 
                   icon={<Briefcase className="text-brand-olive" />} 
-                  title={currentReport.career.title} 
+                  title={currentReport?.career?.title || 'קריירה ומימוש'} 
                   subtitle="הפוטנציאל הכלכלי והעסקי שלך"
                 />
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <BentoCard 
                     title="חוזקות מפתח" 
-                    items={currentReport.career.strengths}
+                    items={currentReport?.career?.strengths || []}
                     color="emerald"
                   />
                   <BentoCard 
                     title="מה דורש חיזוק" 
-                    items={currentReport.career.weaknesses}
+                    items={currentReport?.career?.weaknesses || []}
                     color="red"
                   />
                   <div className="bg-brand-accent/5 p-8 rounded-[2rem] border border-brand-accent/10 flex flex-col justify-center">
                     <h4 className="text-2xl font-serif font-bold text-brand-ink mb-4">עצמאית או שכירה?</h4>
-                    <p className="text-brand-ink/70 leading-relaxed">
-                      {currentReport.career.status}
+                    <p className="text-brand-ink/70 leading-relaxed whitespace-pre-line">
+                      {currentReport?.career?.status || 'המפה שלך מצביעה על פוטנציאל רב בשני התחומים.'}
                     </p>
                   </div>
                 </div>
                 <div className="p-8 bg-white rounded-3xl border border-brand-accent/10 shadow-sm">
                   <h4 className="text-lg font-serif font-bold text-brand-ink mb-4">המלצות מקצועיות:</h4>
-                  <p className="text-brand-ink/60 leading-relaxed">{currentReport.career.recommendations}</p>
+                  <p className="text-brand-ink/60 leading-relaxed whitespace-pre-line">{currentReport?.career?.recommendations || 'מומלץ להתמקד בתחומים שבהם תוכלי להביא לידי ביטוי את הכישרונות הייחודיים שלך.'}</p>
                 </div>
               </section>
 
@@ -399,7 +728,7 @@ export default function App() {
                   subtitle="התפתחות הנשמה לאורך השנים"
                 />
                 <div className="relative space-y-12 before:absolute before:right-[23px] before:top-4 before:bottom-4 before:w-[2px] before:bg-brand-accent/10">
-                  {currentReport.destiny.map((item, idx) => (
+                  {(currentReport?.destiny || []).map((item, idx) => (
                     <TimelineItem 
                       key={idx}
                       age={item.age} 
@@ -416,18 +745,18 @@ export default function App() {
               <section id="personal-steps" className="space-y-12 scroll-mt-24">
                 <SectionHeader 
                   icon={<Zap className="text-brand-accent" />} 
-                  title={currentReport.personalSteps.title} 
+                  title={currentReport?.personalSteps?.title || 'המלצות אישיות'} 
                   subtitle="כלים מעשיים לאיזון וצמיחה"
                 />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <BentoCard 
                     title="תסמיני מינוס (מה לעצור)" 
-                    items={currentReport.personalSteps.minusSymptoms} 
+                    items={currentReport?.personalSteps?.minusSymptoms || []} 
                     color="red" 
                   />
                   <BentoCard 
                     title="כלי פלוס (מה לחזק)" 
-                    items={currentReport.personalSteps.plusTools} 
+                    items={currentReport?.personalSteps?.plusTools || []} 
                     color="emerald" 
                   />
                 </div>
@@ -445,15 +774,15 @@ export default function App() {
                   <div className="space-y-6">
                     <div className="space-y-2">
                       <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">נקודת כניסה</h4>
-                      <p className="text-brand-ink/60 text-sm">{currentReport.money.entry}</p>
+                      <p className="text-brand-ink/60 text-sm whitespace-pre-line">{currentReport?.money?.entry || 'נקודת הכניסה לכסף במפה שלך.'}</p>
                     </div>
                     <div className="space-y-2">
                       <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">האנרגיה המרכזית</h4>
-                      <p className="text-brand-ink/60 text-sm">{currentReport.money.main}</p>
+                      <p className="text-brand-ink/60 text-sm whitespace-pre-line">{currentReport?.money?.main || 'האנרגיה המרכזית של ערוץ השפע.'}</p>
                     </div>
                     <div className="space-y-2">
                       <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">נקודת איזון</h4>
-                      <p className="text-brand-ink/60 text-sm">{currentReport.money.balance}</p>
+                      <p className="text-brand-ink/60 text-sm whitespace-pre-line">{currentReport?.money?.balance || 'הדרך לאזן את ערוץ הכסף.'}</p>
                     </div>
                   </div>
                 </div>
@@ -468,26 +797,26 @@ export default function App() {
                   <div className="space-y-6">
                     <div className="space-y-2">
                       <h4 className="text-xs font-bold text-brand-accent uppercase tracking-wider">נקודת כניסה</h4>
-                      <p className="text-brand-ink/60 text-sm">{currentReport.love.entry}</p>
+                      <p className="text-brand-ink/60 text-sm whitespace-pre-line">{currentReport?.love?.entry || 'נקודת הכניסה לאהבה במפה שלך.'}</p>
                     </div>
                     <div className="space-y-2">
                       <h4 className="text-xs font-bold text-brand-accent uppercase tracking-wider">מהות הקשר</h4>
-                      <p className="text-brand-ink/60 text-sm">{currentReport.love.main}</p>
+                      <p className="text-brand-ink/60 text-sm whitespace-pre-line">{currentReport?.love?.main || 'האנרגיה המרכזית של ערוץ הזוגיות.'}</p>
                     </div>
                     <div className="space-y-2">
                       <h4 className="text-xs font-bold text-brand-accent uppercase tracking-wider">נקודת איזון</h4>
-                      <p className="text-brand-ink/60 text-sm">{currentReport.love.balance}</p>
+                      <p className="text-brand-ink/60 text-sm whitespace-pre-line">{currentReport?.love?.balance || 'הדרך לאזן את ערוץ האהבה.'}</p>
                     </div>
-                    {currentReport.love.correction && (
+                    {currentReport?.love?.correction && (
                       <div className="space-y-2">
                         <h4 className="text-xs font-bold text-brand-accent uppercase tracking-wider">התיקון בזוגיות</h4>
-                        <p className="text-brand-ink/60 text-sm">{currentReport.love.correction}</p>
+                        <p className="text-brand-ink/60 text-sm whitespace-pre-line">{currentReport.love.correction}</p>
                       </div>
                     )}
-                    {currentReport.love.strengths && (
+                    {currentReport?.love?.strengths && (
                       <div className="space-y-2">
                         <h4 className="text-xs font-bold text-brand-accent uppercase tracking-wider">חוזקות בפלוס</h4>
-                        <p className="text-brand-ink/60 text-sm">{currentReport.love.strengths}</p>
+                        <p className="text-brand-ink/60 text-sm whitespace-pre-line">{currentReport.love.strengths}</p>
                       </div>
                     )}
                   </div>
@@ -500,12 +829,12 @@ export default function App() {
               <section id="karma" className="space-y-12 scroll-mt-24">
                 <SectionHeader 
                   icon={<Anchor className="text-brand-accent" />} 
-                  title={currentReport.karma.title} 
+                  title={currentReport?.karma?.title || 'שיעורים קרמתיים'} 
                   subtitle="התיקון והשיעור הקרמתי שלך"
                 />
                 <div className="p-10 bg-brand-accent/5 rounded-[2.5rem] border border-brand-accent/10">
-                  <p className="text-lg text-brand-ink/70 leading-relaxed">
-                    {currentReport.karma.content}
+                  <p className="text-lg text-brand-ink/70 leading-relaxed whitespace-pre-line">
+                    {currentReport?.karma?.content || 'השיעור הקרמתי שלך קשור לאיזון וצמיחה פנימית.'}
                   </p>
                 </div>
               </section>
@@ -519,7 +848,7 @@ export default function App() {
                 />
                 <div className="bg-white rounded-[2.5rem] border border-brand-accent/10 overflow-hidden shadow-sm">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-brand-accent/10">
-                    {currentReport.health.chakras.map((chakra) => (
+                    {(currentReport?.health?.chakras || []).map((chakra) => (
                       <ChakraCard 
                         key={chakra.id}
                         id={chakra.id} 
@@ -533,8 +862,8 @@ export default function App() {
                   </div>
                   <div className="p-8 bg-brand-accent/5 border-t border-brand-accent/10 text-center">
                     <h4 className="text-xl font-serif font-bold text-brand-ink mb-2">סיכום בריאותי כולל</h4>
-                    <p className="text-brand-ink/60 max-w-2xl mx-auto">
-                      {currentReport.health.summary}
+                    <p className="text-brand-ink/60 max-w-2xl mx-auto whitespace-pre-line">
+                      {currentReport?.health?.summary || 'המפה הבריאותית שלך מציגה חוסן פנימי ויכולת התאוששות.'}
                     </p>
                   </div>
                 </div>
@@ -548,13 +877,14 @@ export default function App() {
                   subtitle="מה מחכה לך באופק"
                 />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {currentReport.forecast.map((item, idx) => (
+                  {(currentReport?.forecast || []).map((item, idx) => (
                     <ForecastCard 
                       key={idx}
                       year={item.year} 
                       title={item.title} 
                       content={item.content}
                       color={idx === 0 ? "purple" : "indigo"}
+                      onClick={() => setSelectedForecast(item)}
                     />
                   ))}
                 </div>
@@ -578,7 +908,7 @@ export default function App() {
               {/* Final CTA & Share */}
               <section className="text-center space-y-8 py-20 border-t border-brand-accent/10">
                 <h2 className="text-4xl font-serif font-bold text-brand-ink">מוכנה לצאת לדרך חדשה?</h2>
-                <p className="text-brand-ink/60 max-w-xl mx-auto">
+                <p className="text-brand-ink/60 max-w-xl mx-auto whitespace-pre-line">
                   {currentReport.outro || `${name} האהובה, המפה שלך מציגה אישה עוצמתית, חכמה ורוחנית. יש לך את היכולת להאיר את העולם ולהוביל אנשים.`}
                 </p>
                 <div className="flex flex-col md:flex-row items-center justify-center gap-4">
@@ -591,6 +921,8 @@ export default function App() {
                   </button>
                 </div>
               </section>
+
+              <ContactFooter />
             </motion.div>
           )}
         </AnimatePresence>
@@ -599,20 +931,6 @@ export default function App() {
       <footer className="py-12 border-t border-brand-accent/10 text-center text-brand-ink/40 text-sm">
         <p>© {new Date().getFullYear()} מטריצת הגורל - ניתוח אישי אינטראקטיבי עבור {name}</p>
       </footer>
-
-      {/* Floating WhatsApp Button */}
-      <motion.a
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        href={`https://wa.me/972505213995?text=${encodeURIComponent("היי נטלי, אשמח לקבוע ייעוץ אישי \n שם:")}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-[90] w-16 h-16 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-2xl shadow-[#25D366]/40 hover:bg-[#128C7E] transition-colors"
-      >
-        <WhatsAppIcon size={32} />
-      </motion.a>
 
       {/* Tarot Modal */}
       <AnimatePresence>
@@ -625,6 +943,13 @@ export default function App() {
       <AnimatePresence>
         {selectedChakra && (
           <ChakraModal chakra={selectedChakra} onClose={() => setSelectedChakra(null)} />
+        )}
+      </AnimatePresence>
+
+      {/* Forecast Modal */}
+      <AnimatePresence>
+        {selectedForecast && (
+          <ForecastModal forecast={selectedForecast} onClose={() => setSelectedForecast(null)} />
         )}
       </AnimatePresence>
     </div>
@@ -734,7 +1059,7 @@ function TarotModal({ card, onClose }: { card: TarotCard, onClose: () => void })
               <div className="h-px bg-brand-accent/20 w-10" />
               
               <div className="space-y-3">
-                <p className="text-brand-ink/70 leading-relaxed text-base">
+                <p className="text-brand-ink/70 leading-relaxed text-base whitespace-pre-line">
                   {card.description}
                 </p>
                 
@@ -787,7 +1112,7 @@ function BentoCard({ title, items, color }: { title: string, items: string[], co
       <h4 className="text-lg font-serif font-bold text-brand-ink mb-6">{title}</h4>
       <ul className="space-y-4">
         {items.map((item, i) => (
-          <li key={i} className="flex items-start gap-3 text-brand-ink/60 text-sm leading-relaxed">
+          <li key={i} className="flex items-start gap-3 text-brand-ink/60 text-sm leading-relaxed whitespace-pre-line">
             <div className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 ${colors[color].split(' ')[0]}`} />
             {item}
           </li>
@@ -814,7 +1139,7 @@ function TimelineItem({ age, title, content, active }: TimelineItemProps) {
       <div className="space-y-2">
         <div className="text-xs font-bold text-brand-accent uppercase tracking-widest">{age}</div>
         <h4 className="text-xl font-serif font-bold text-brand-ink">{title}</h4>
-        <p className="text-brand-ink/60 text-sm leading-relaxed max-w-2xl">{content}</p>
+        <p className="text-brand-ink/60 text-sm leading-relaxed max-w-2xl whitespace-pre-line">{content}</p>
       </div>
     </div>
   );
@@ -845,7 +1170,7 @@ function ChakraCard({ id, name, focus, energy, desc, onClick }: ChakraCardProps 
         </div>
       </div>
       <div className="text-xs text-brand-accent font-semibold">{focus}</div>
-      <p className="text-xs text-brand-ink/50 leading-relaxed line-clamp-2">{desc}</p>
+      <p className="text-xs text-brand-ink/50 leading-relaxed whitespace-pre-line">{desc}</p>
     </button>
   );
 }
@@ -863,52 +1188,55 @@ function ChakraModal({ chakra, onClose }: { chakra: any, onClose: () => void }) 
         initial={{ scale: 0.9, y: 20 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.9, y: 20 }}
-        className="relative max-w-lg w-full bg-brand-warm border border-brand-accent/10 rounded-[2rem] p-8 md:p-10 shadow-2xl space-y-6"
+        className="relative max-w-2xl w-full bg-brand-warm border border-brand-accent/10 rounded-[2.5rem] shadow-2xl flex flex-col max-h-[90vh] overflow-hidden"
         onClick={e => e.stopPropagation()}
       >
         <button 
           onClick={onClose}
-          className="absolute top-4 right-4 z-30 w-10 h-10 rounded-full bg-white/90 border border-brand-accent/10 flex items-center justify-center text-brand-ink hover:bg-brand-accent hover:text-white transition-all shadow-sm"
+          className="absolute top-6 right-6 z-30 w-10 h-10 rounded-full bg-white/90 border border-brand-accent/10 flex items-center justify-center text-brand-ink hover:bg-brand-accent hover:text-white transition-all shadow-sm"
         >
           <X size={20} />
         </button>
 
-        <div className="space-y-4">
-          <div className="space-y-1">
-            <div className="text-brand-accent font-bold tracking-widest text-[10px] uppercase">צ'אקרה {chakra.id}</div>
-            <h3 className="text-xl md:text-2xl font-serif font-bold text-brand-ink leading-tight">{chakra.name}</h3>
-            <div className="text-xs text-brand-accent font-semibold">{chakra.focus}</div>
+        <div className="p-8 md:p-12 overflow-y-auto custom-scrollbar space-y-8">
+          <div className="space-y-2">
+            <div className="text-brand-accent font-bold tracking-widest text-xs uppercase">צ'אקרה {chakra.id}</div>
+            <h3 className="text-2xl md:text-3xl font-serif font-bold text-brand-ink leading-tight">{chakra.name}</h3>
+            <div className="text-sm text-brand-accent font-semibold">{chakra.focus}</div>
           </div>
           
-          <div className="h-px bg-brand-accent/20 w-10" />
+          <div className="h-px bg-brand-accent/20 w-16" />
           
-          <div className="space-y-3">
-            <p className="text-brand-ink/70 leading-relaxed text-base">
+          <div className="space-y-6">
+            <p className="text-brand-ink/70 leading-relaxed text-lg whitespace-pre-line">
               {chakra.desc}
             </p>
-            <div className="grid grid-cols-3 gap-3">
-              <div className="p-3 bg-brand-accent/5 rounded-xl border border-brand-accent/10 text-center">
-                <div className="text-[10px] font-bold text-brand-ink/40 uppercase mb-1">פיזי</div>
-                <div className="text-lg font-serif font-bold text-brand-accent">{chakra.physical}</div>
+            
+            <div className="grid grid-cols-3 gap-4">
+              <div className="p-4 bg-brand-accent/5 rounded-2xl border border-brand-accent/10 text-center space-y-1">
+                <div className="text-[10px] font-bold text-brand-ink/40 uppercase">פיזי</div>
+                <div className="text-xl font-serif font-bold text-brand-accent">{chakra.physical ?? '-'}</div>
               </div>
-              <div className="p-3 bg-brand-accent/5 rounded-xl border border-brand-accent/10 text-center">
-                <div className="text-[10px] font-bold text-brand-ink/40 uppercase mb-1">קוד ייחודי</div>
-                <div className="text-lg font-serif font-bold text-brand-accent">{chakra.energetic}</div>
+              <div className="p-4 bg-brand-accent/5 rounded-2xl border border-brand-accent/10 text-center space-y-1">
+                <div className="text-[10px] font-bold text-brand-ink/40 uppercase">קוד ייחודי</div>
+                <div className="text-xl font-serif font-bold text-brand-accent">{chakra.energetic ?? '-'}</div>
               </div>
-              <div className="p-3 bg-brand-accent/20 rounded-xl border border-brand-accent/30 text-center">
-                <div className="text-[10px] font-bold text-brand-ink/40 uppercase mb-1">שלמות</div>
-                <div className="text-lg font-serif font-bold text-brand-accent">{chakra.energy}</div>
+              <div className="p-4 bg-brand-accent/20 rounded-2xl border border-brand-accent/30 text-center space-y-1">
+                <div className="text-[10px] font-bold text-brand-ink/40 uppercase">שלמות</div>
+                <div className="text-xl font-serif font-bold text-brand-accent">{chakra.energy ?? '-'}</div>
               </div>
             </div>
           </div>
         </div>
 
-        <button 
-          onClick={onClose}
-          className="w-full py-4 bg-brand-accent text-white font-bold rounded-2xl hover:bg-brand-accent/90 transition-all"
-        >
-          סגור
-        </button>
+        <div className="p-6 bg-white/50 border-t border-brand-accent/5">
+          <button 
+            onClick={onClose}
+            className="w-full py-4 bg-brand-accent text-white font-bold rounded-2xl hover:bg-brand-accent/90 transition-all shadow-lg shadow-brand-accent/20"
+          >
+            סגור
+          </button>
+        </div>
       </motion.div>
     </motion.div>
   );
@@ -922,17 +1250,69 @@ interface ForecastCardProps {
   color: string;
 }
 
-function ForecastCard({ year, title, content, color }: ForecastCardProps) {
+function ForecastCard({ year, title, content, color, onClick }: ForecastCardProps & { onClick?: () => void }) {
   const colors: Record<string, string> = {
-    purple: "border-brand-accent/10 bg-white text-brand-accent",
-    indigo: "border-brand-accent/10 bg-white text-brand-olive"
+    purple: "border-brand-accent/10 bg-white text-brand-accent hover:bg-brand-accent/5",
+    indigo: "border-brand-accent/10 bg-white text-brand-olive hover:bg-brand-olive/5"
   };
 
   return (
-    <div className={`p-10 rounded-[2.5rem] border ${colors[color]} space-y-6 shadow-sm`}>
+    <button 
+      onClick={onClick}
+      className={`p-10 rounded-[2.5rem] border ${colors[color]} space-y-6 shadow-sm transition-all text-right w-full group`}
+    >
       <div className="text-sm font-bold uppercase tracking-widest">{year}</div>
-      <h4 className="text-2xl font-serif font-bold text-brand-ink">{title}</h4>
-      <p className="text-brand-ink/60 leading-relaxed">{content}</p>
-    </div>
+      <h4 className="text-2xl font-serif font-bold text-brand-ink group-hover:text-brand-accent transition-colors">{title}</h4>
+      <p className="text-brand-ink/60 leading-relaxed whitespace-pre-line">{content}</p>
+    </button>
+  );
+}
+
+function ForecastModal({ forecast, onClose }: { forecast: any, onClose: () => void }) {
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-brand-ink/40 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <motion.div 
+        initial={{ scale: 0.9, y: 20 }}
+        animate={{ scale: 1, y: 0 }}
+        exit={{ scale: 0.9, y: 20 }}
+        className="relative max-w-2xl w-full bg-brand-warm border border-brand-accent/10 rounded-[2.5rem] shadow-2xl flex flex-col max-h-[90vh] overflow-hidden"
+        onClick={e => e.stopPropagation()}
+      >
+        <button 
+          onClick={onClose}
+          className="absolute top-6 right-6 z-30 w-12 h-12 rounded-full bg-white border border-brand-accent/10 flex items-center justify-center text-brand-ink hover:bg-brand-accent hover:text-white transition-all shadow-sm"
+        >
+          <X size={24} />
+        </button>
+
+        <div className="p-8 md:p-12 overflow-y-auto custom-scrollbar space-y-8">
+          <div className="space-y-2">
+            <div className="text-brand-accent font-bold tracking-widest text-sm uppercase">{forecast.year}</div>
+            <h3 className="text-3xl md:text-4xl font-serif font-bold text-brand-ink leading-tight">{forecast.title}</h3>
+          </div>
+          
+          <div className="h-px bg-brand-accent/20 w-16" />
+          
+          <p className="text-brand-ink/70 leading-relaxed text-lg whitespace-pre-line">
+            {forecast.content}
+          </p>
+        </div>
+
+        <div className="p-6 bg-white/50 border-t border-brand-accent/5">
+          <button 
+            onClick={onClose}
+            className="w-full py-5 bg-brand-accent text-white font-bold rounded-2xl hover:bg-brand-accent/90 transition-all shadow-lg shadow-brand-accent/20"
+          >
+            הבנתי, תודה
+          </button>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 }

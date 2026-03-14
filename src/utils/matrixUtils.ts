@@ -27,12 +27,15 @@ export interface MatrixData {
 }
 
 export function calculateMatrix(dateStr: string): MatrixData | null {
-  const date = new Date(dateStr);
-  if (isNaN(date.getTime())) return null;
-
-  const day = date.getDate();
-  const month = date.getMonth() + 1;
-  const year = date.getFullYear();
+  // Expected format: DD/MM/YYYY
+  const parts = dateStr.split('/');
+  if (parts.length !== 3) return null;
+  
+  const day = parseInt(parts[0]);
+  const month = parseInt(parts[1]);
+  const year = parseInt(parts[2]);
+  
+  if (isNaN(day) || isNaN(month) || isNaN(year)) return null;
 
   const a = reduceTo22(day);
   const b = reduceTo22(month);
